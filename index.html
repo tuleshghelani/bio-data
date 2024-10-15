@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dipen Panara</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
     <div class="background-animation"></div>
     <div class="container">
         <header>
             <div class="profile-container">
-                <img src="Designer.jpeg" alt="Your Name" class="profile-photo">
+                <img src="Photo_4_1.jpg" alt="Your Name" class="profile-photo">
                 <div class="profile-overlay"></div>
             </div>
             <h1 class="glitch" data-text="Your Name">Dipen Panara</h1>
             <p class="tagline">Seeking a life partner to share love and happiness</p>
+            <button id="viewPhotosBtn" class="view-photos-btn">View Photos</button>
         </header>
         
         <section class="personal-info" data-aos="fade-up">
@@ -25,7 +29,7 @@
                 <li><i class="fas fa-calendar-alt"></i> Birth Date: 25-02-2001</li>
                 <li><i class="fas fa-ruler-vertical"></i> Height: 5'8"</li>
                 <li><i class="fas fa-map-marker-alt"></i> Location: 1303, Silver Classic near ganga hall, Amin marge,Rajkot</li>
-                <li><i class="fas fa-graduation-cap"></i> Education: B.com</li>
+                <li><i class="fas fa-graduation-cap"></i> Education: BBA</li>
                 <li><i class="fas fa-briefcase"></i> Business: J.P.Patel</li>
             </ul>
         </section>
@@ -40,6 +44,12 @@
             <ul>
                 <li><i class="fas fa-male"></i> Father's name: Rasikbhai Prabhubhai Panara</li>
                 <li><i class="fas fa-female"></i> Mother's name: Abhilashaben Prabhubhai Panara</li>
+                <li><i class="fas"></i> Maternal: Maheshbhai Desai</li>
+                <li><i class="fas"></i> Contact: 
+                    <a href="tel:(+91)9512711223" class="phone-link">
+                        <i class="fas fa-phone"></i> +91 9512711223
+                    </a>
+                </li>
                 <!-- <li><i class="fas fa-user-friends"></i> Siblings: 1 elder brother (Married)</li> -->
             </ul>
         </section>
@@ -54,13 +64,25 @@
             </ul>
         </section> -->
         
-        <footer>
-            <p><i class="fas fa-envelope"></i> 
-                <!-- your.email@example.com | -->
-                <a href="tel:(+91)9512711223" style="color: white;"> <i class="ion-ios-telephone"></i> <i class="fas fa-phone"></i> +91 9512711223
+        <!-- <footer>
+            <p>
+                <a href="tel:(+91)9512711223" class="phone-link">
+                    <i class="fas fa-phone"></i> +91 9512711223
                 </a>
             </p>
-        </footer>
+        </footer> -->
+    </div>
+    
+    <div id="photoSlider" class="photo-slider">
+        <div class="slider-background"></div>
+        <div class="slider-content">
+            <img src="Photo_1.jpg" alt="Photo 1" class="slider-photo active" loading="lazy">
+            <img src="Photo_2.jpg" alt="Photo 2" class="slider-photo" loading="lazy">
+            <img src="Photo_3.jpg" alt="Photo 3" class="slider-photo" loading="lazy">
+        </div>
+        <button class="slider-close">&times;</button>
+        <button class="slider-nav prev">&lt;</button>
+        <button class="slider-nav next">&gt;</button>
     </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="script.js"></script>

@@ -11,17 +11,29 @@ document.addEventListener('DOMContentLoaded', function() {
     themeToggle.innerHTML = '🌓';
     themeToggle.classList.add('theme-toggle');
     document.body.appendChild(themeToggle);
-    
-    themeToggle.addEventListener('click', () => {
+
+    function toggleTheme() {
         document.body.classList.toggle('dark-theme');
         localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        updateThemeToggleButton();
+    }
+
+    function updateThemeToggleButton() {
+        themeToggle.innerHTML = document.body.classList.contains('dark-theme') ? '☀️' : '🌓';
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+    themeToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleTheme();
     });
-    
+
     // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
     }
+    updateThemeToggleButton();
 
     // Add hover effect to list items
     const listItems = document.querySelectorAll('li');
@@ -78,4 +90,100 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     typeWriter();
+
+    // Photo slider functionality
+    const viewPhotosBtn = document.getElementById('viewPhotosBtn');
+    const photoSlider = document.getElementById('photoSlider');
+    const sliderPhotos = document.querySelectorAll('.slider-photo');
+    const closeBtn = document.querySelector('.slider-close');
+    const prevBtn = document.querySelector('.slider-nav.prev');
+    const nextBtn = document.querySelector('.slider-nav.next');
+
+    let currentPhotoIndex = 0;
+
+    function updateSliderBackground() {
+        const sliderBackground = document.querySelector('.slider-background');
+        const currentPhoto = document.querySelector('.slider-photo.active');
+        
+        if (currentPhoto) {
+            const img = new Image();
+            img.src = currentPhoto.src;
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 1;
+                canvas.height = 1;
+                ctx.drawImage(img, 0, 0, 1, 1);
+                const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+                sliderBackground.style.background = `linear-gradient(45deg, rgba(${r},${g},${b},0.3), var(--secondary-color))`;
+            }
+        }
+    }
+
+    function showPhoto(index) {
+        sliderPhotos.forEach(photo => {
+            photo.classList.remove('active');
+            photo.style.opacity = 0;
+        });
+        sliderPhotos[index].classList.add('active');
+        setTimeout(() => {
+            sliderPhotos[index].style.opacity = 1;
+        }, 50);
+        updateSliderBackground();
+    }
+
+    function nextPhoto() {
+        currentPhotoIndex = (currentPhotoIndex + 1) % sliderPhotos.length;
+        showPhoto(currentPhotoIndex);
+    }
+
+    function prevPhoto() {
+        currentPhotoIndex = (currentPhotoIndex - 1 + sliderPhotos.length) % sliderPhotos.length;
+        showPhoto(currentPhotoIndex);
+    }
+
+    viewPhotosBtn.addEventListener('click', () => {
+        photoSlider.classList.add('active');
+        showPhoto(currentPhotoIndex);
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        photoSlider.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    prevBtn.addEventListener('click', prevPhoto);
+    nextBtn.addEventListener('click', nextPhoto);
+
+    // Close slider when clicking outside the content
+    photoSlider.addEventListener('click', (e) => {
+        if (e.target === photoSlider) {
+            photoSlider.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Keyboard navigation for slider
+    document.addEventListener('keydown', (e) => {
+        if (photoSlider.classList.contains('active')) {
+            if (e.key === 'ArrowRight') {
+                nextPhoto();
+            } else if (e.key === 'ArrowLeft') {
+                prevPhoto();
+            } else if (e.key === 'Escape') {
+                photoSlider.classList.remove('active');
+            }
+        }
+    });
+
+    // Button animation
+    function animateButton() {
+        viewPhotosBtn.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            viewPhotosBtn.style.transform = 'scale(1)';
+        }, 200);
+    }
+
+    setInterval(animateButton, 3000);
 });
